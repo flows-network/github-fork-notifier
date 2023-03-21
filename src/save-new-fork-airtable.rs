@@ -25,9 +25,9 @@ async fn handler(payload: EventPayload) {
         send_message_to_channel("ik8", "general", text);
 
         let data = serde_json::json!({
-        "id": id,
-        "html_url": html_url,
-        "created": time,
+        "Name": id,
+        "Repo": html_url,
+        "Created": time,
         });
         create_record(account, base_id, table_name, data)
     }
