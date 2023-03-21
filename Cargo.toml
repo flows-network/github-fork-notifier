@@ -1,0 +1,16 @@
+[package]
+name = "save-new-fork-airtable"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/save-new-fork-airtable.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+github-flows = "0.3.2"
+slack-flows = "0.2.5"
+tokio_wasi = { version = "1.25.1", features = ["macros", "rt"] }
+anyhow = "1"
+serde_json = "1"
+airtable-flows = "0.1.9"
