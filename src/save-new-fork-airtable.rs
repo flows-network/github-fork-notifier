@@ -12,8 +12,8 @@ pub async fn run() {
 
 async fn handler(payload: EventPayload) {
     let account: &str = "jaykchen";
-    let base_id: &str = "from-gh";
-    let table_name: &str = "ghgh";
+    let base_id: &str = "apptJFYvsGrrywvWh";
+    let table_name: &str = "users";
 
     if let EventPayload::ForkEvent(e) = payload {
         
