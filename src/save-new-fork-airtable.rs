@@ -16,16 +16,17 @@ async fn handler(payload: EventPayload) {
     let table_name: &str = "ghgh";
 
     if let EventPayload::ForkEvent(e) = payload {
+        
         let forkee = e.forkee;
-        let id = forkee.id;
+        let name = forkee.owner.unwrap().login;
         let html_url = forkee.html_url.unwrap().to_string();
         let time = forkee.created_at.expect("time not found");
 
-        let text = format!("{} forked your {}\n{}", id, html_url, time);
+        let text = format!("{} forked your {}\n{}", name, html_url, time);
         send_message_to_channel("ik8", "general", text);
 
         let data = serde_json::json!({
-        "Name": id,
+        "Name": name,
         "Repo": html_url,
         "Created": time,
         });
