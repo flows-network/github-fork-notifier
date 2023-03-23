@@ -1,53 +1,78 @@
 # GitHub Fork Notifier
 
-[Deploy this function on flows.network](#deploy-chatgpt-github-app-on-your-github-repo), and you will get an automated workflow if someone forked your GitHub repo, then you will get a Slack message and save this fork record to a form of Airtable at the same time. It helps DevRel understand the growth of your GitHub community.
+[Deploy this function on flows.network](#deploy-the-github-fork-notifier), and you will get an automated workflow if someone forked your GitHub repo, then you will get a Slack message and save this fork record to a form of Airtable at the same time. It helps DevRel understand the growth of your GitHub community.
 
+![Github fork to slack](https://user-images.githubusercontent.com/45785633/227115653-935c616b-2881-4832-a53c-850f63a0f322.png)
+![Save GitHub fork to Airtable ](https://user-images.githubusercontent.com/45785633/227122019-258041fc-ce2c-4819-9648-8fc51fee5782.png)
 
-
-Powered by `gpt4`, Rust and [WasmEdge](https://github.com/WasmEdge/WasmEdge)
 
 ## Prerequisite 
+* A Slack Account
+* An Airtable accont, an [Airtable API Key](https://airtable.com/account) and also a base to record the new forks. For the form, you could just simply [copy the template base](https://airtable.com/shrwhFUgnz97Uf4nr). I will give more details bellow.
 
-You will need an [OpenAI API key](https://openai.com/blog/openai-api). If you do not already have one, [sign up here](https://platform.openai.com/signup).
+## Deploy the GitHub fork notifier
 
-## Deploy ChatGPT GitHub App on your GitHub repo
+To use this fork notifier, we will use [flows.network](https://flows.network/), a serverless platform that makes deploying your own app quick and easy in just three steps.
 
-To install the ChatGPT GitHub App, we will use [flows.network](https://flows.network/), a serverless platform that makes deploying your own app quick and easy in just three steps.
+### Fork this repo and cutomize the code
 
-### Fork this repo
+Fork [this repo](https://github.com/flows-network/chatgpt-github-app/) and customize the code based on your needs. Since this function involes three SaaS integrations, so we need to change the code as the following.
 
-Fork [this repo](https://github.com/flows-network/chatgpt-github-app/) and go to flows.network to deploy your function. 
+1. GitHub: Replace `WasmEdge` and `WasmEdge` with your own GitHub repo that you want to monitor the fork data.
+
+```
+pub async fn run() {
+    let owner = "WasmEdge";
+    let repo = "WasmEdge";
+
+    listen_to_event(owner, repo, vec!["fork"], handler).await;
+}
+```
+2. Airtable: Change the parameters for Airtable based on the code comment. This is where you save the new fork.
+```
+async fn handler(payload: EventPayload) {
+    let account: &str = "github"; // The name that you will name your Airtable API key in the SaaS configuration step. You can get this from Airtable.
+    let base_id: &str = "appNEswczILgUsxML"; // This is the base where you want to record new forks. You can get this from Airtable easily. Please refer to https://support.airtable.com/docs/finding-airtable-ids#finding-ids-in-airtable-api
+    let table_name: &str = "fork"; // This the table name in the above base. If you're using the template that we provide, then don't need to change this.
+````
+
+3. Slack: Replace `secondstate` and `github-status` with your own Slack workaspace and channel. This is where you get the new for message.
+
+```
+let text = format!("{} forked your {}\n{}", name, html_url, time);
+send_message_to_channel("secondstate", "github-status", text);
+```
 
 ### Deploy the code on flow.network
 
+Next, let deploy this repo on flows.network
+
 1. Sign up for an account for deploying flows on [flows.network](https://flows.network/). It's free.
-2. Click on the "Create a Flow" button to start deploying the ChatGPT GitHub APP
-3. Authenticate the [flows.network](https://flows.network/) to access the `chatgpt-github-app` repo you just forked. 
-![image](https://user-images.githubusercontent.com/45785633/226546523-93071359-b957-4653-a429-ab983ee9a078.png)
+2. Click on the "Create a Flow" button to start deploying this function
+3. Authenticate the [flows.network](https://flows.network/) to access the `github-fork-notifier` repo you just forked. 
 
-4. Click on the Advanced text and you will see more setting. Fill in the required Environment Variables. In this example, we have three variables. One is `owner`. Fill in the GitHub org Name you want to connect here. The second one is `repo`. Fill in the GitHub repo Name under the GitHub org you just entered. The last one is `openai_key_name`. **Fill in the name you want to name your OpenAI Key**.
+<img width="886" alt="image" src="https://user-images.githubusercontent.com/45785633/227131173-26a1da68-74d0-479e-88d3-1184f6db0755.png">
 
-![image](https://user-images.githubusercontent.com/45785633/226547582-a215ed5e-1966-4bdb-b8a1-f4c6d28cc215.png)
-
-5. At last, click the Deploy button to deploy your function.
+4. Click the Deploy button to deploy your function.
 
 ### Configure SaaS integrations
 
-After that, the flows.network will direct you to configure the SaaS integration required by your flow.
+After that, the flows.network will direct you to configure the SaaS integrations required by your flow.
 
-![image](https://user-images.githubusercontent.com/45785633/226547995-54927771-7782-484a-8c9c-908e91f99444.png)
+<img width="1452" alt="image" src="https://user-images.githubusercontent.com/45785633/227131712-f6356a60-830d-4980-b563-458da0816333.png">
 
-Here we can see, we need to configue two SaaS integrations.
+Here we can see, we need to configue three SaaS integrations.
 
-1. Click on the "Connect/+ Add new authentication" button to authenticate your OpenAI account. You'll be redirected to a new page where you could copy and paste your OpenAI API key and then name the key. **Note that the name you enter here should be the same as the name in the environment variables.**
+1. Click the "Connect/+ Add new authentication" button to authenticate your Slack account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network-integration` bot on your workspace. This workspace is the one you changed in the code above.
 
-<img width="758" alt="image" src="https://user-images.githubusercontent.com/45785633/222973214-ecd052dc-72c2-4711-90ec-db1ec9d5f24e.png">
+2. Click the "Connect/+ Add new authentication" button to authenticate your Airtable account. You'll be redirected to a new page where you could copy and paste your Airtable API key and then name the key. **Note that the name you enter here should be the same as the name you changed in the code above.**
 
-2. Click the "Connect/+ Add new authentication" button to authenticate your GitHub account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network-integration` bot on a repo. This repo is the one you entered into the environment variables above.
+<img width="741" alt="image" src="https://user-images.githubusercontent.com/45785633/227132305-b093dded-6569-4c29-8026-55a3ec9bc62b.png">
 
-After that, click the Check button to see your flow details. As soon as the flow function's status becomes `ready` and the flow's status became `running`, the ChatGPT GitHub App goes live. Go ahead and chat with ChatGPT by creating an issue!
+3. Click the "Connect/+ Add new authentication" button to authenticate your GitHub account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network-integration` bot on the repo that you changed in the code above.
 
-![image](https://user-images.githubusercontent.com/45785633/226550405-67d0741c-6c78-42ef-87d1-b30bbd45a5a9.png)
+After that, click the Check button to see your flow details. As soon as the flow function's status becomes `ready` and the flow's status became `running`, the flow goes live. When a GitHub user forked your repo, you will get a Slack notifitaion and a new record in your Airtable.
+<img width="1183" alt="image" src="https://user-images.githubusercontent.com/45785633/227132839-d4008845-4a67-46dc-af14-90e06ad96e12.png">
 
 > [flows.network](https://flows.network/) is still in its early stages. We would love to hear your feedback!
 
