@@ -12,7 +12,7 @@
 
 ## Deploy the GitHub fork notifier
 
-To use this fork notifier, we will use [flows.network](https://flows.network/), a serverless platform that makes deploying your own app quick and easy in just 3 steps.
+To create this fork notifier, we will use [flows.network](https://flows.network/), a serverless platform that makes deploying your own app quick and easy in just 3 steps.
 
 ### Fork this repo and cutomize the code
 
