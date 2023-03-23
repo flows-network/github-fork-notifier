@@ -12,13 +12,13 @@
 
 ## Deploy the GitHub fork notifier
 
-To use this fork notifier, we will use [flows.network](https://flows.network/), a serverless platform that makes deploying your own app quick and easy in just three steps.
+To use this fork notifier, we will use [flows.network](https://flows.network/), a serverless platform that makes deploying your own app quick and easy in just 3 steps.
 
 ### Fork this repo and cutomize the code
 
 Fork [this repo](https://github.com/flows-network/chatgpt-github-app/) and customize the code based on your needs. Since this function involes three SaaS integrations, so we need to change the code as the following.
 
-1. GitHub: Replace `WasmEdge` and `WasmEdge` with your own GitHub repo that you want to monitor the fork data.
+1. GitHub: Replace `WasmEdge` and `WasmEdge` with your own GitHub repo you want to monitor for the fork data.
 
 ```
 pub async fn run() {
@@ -36,7 +36,7 @@ async fn handler(payload: EventPayload) {
     let table_name: &str = "fork"; // This the table name in the above base. If you're using the template that we provide, then don't need to change this.
 ````
 
-3. Slack: Replace `secondstate` and `github-status` with your own Slack workaspace and channel. This is where you get the new for message.
+3. Slack: Replace `secondstate` and `github-status` with your own Slack workaspace and channel. This is where you get the new fork message.
 
 ```
 let text = format!("{} forked your {}\n{}", name, html_url, time);
@@ -45,9 +45,9 @@ send_message_to_channel("secondstate", "github-status", text);
 
 ### Deploy the code on flow.network
 
-Next, let deploy this repo on flows.network
+Next, let us deploy this repo on flows.network.
 
-1. Sign up for an account for deploying flows on [flows.network](https://flows.network/). It's free.
+1. Sign up for an accoun on [flows.network](https://flows.network/). It's a free platform for deploying automation workflows.
 2. Click on the "Create a Flow" button to start deploying this function
 3. Authenticate the [flows.network](https://flows.network/) to access the `github-fork-notifier` repo you just forked. 
 
