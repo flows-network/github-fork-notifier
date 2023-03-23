@@ -65,13 +65,13 @@ Here we can see, we need to configue three SaaS integrations.
 
 1. Click the "Connect/+ Add new authentication" button to authenticate your Slack account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network-integration` bot on your workspace. This workspace is the one you changed in the code above.
 
-2. Click the "Connect/+ Add new authentication" button to authenticate your Airtable account. You'll be redirected to a new page where you could copy and paste your Airtable API key and then name the key. **Note that the name you enter here should be the same as the name you changed in the code above.**
+2. Click the "Connect/+ Add new authentication" button to authenticate your Airtable account. You'll be redirected to a new page where you can copy and paste your Airtable API key and then name the key. **Note that the name you enter here should be the same as the name you changed in the code above.**
 
 <img width="741" alt="image" src="https://user-images.githubusercontent.com/45785633/227132305-b093dded-6569-4c29-8026-55a3ec9bc62b.png">
 
 3. Click the "Connect/+ Add new authentication" button to authenticate your GitHub account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network-integration` bot on the repo that you changed in the code above.
 
-After that, click the Check button to see your flow details. As soon as the flow function's status becomes `ready` and the flow's status became `running`, the flow goes live. When a GitHub user forked your repo, you will get a Slack notifitaion and a new record in your Airtable.
+After that, click the Check button to see your flow details. As soon as the flow function's status becomes `ready` and the flow's status becomes `running`, the flow goes live. When a GitHub user forks your repo, you will get a Slack notifitaion and a new record in your Airtable.
 <img width="1183" alt="image" src="https://user-images.githubusercontent.com/45785633/227132839-d4008845-4a67-46dc-af14-90e06ad96e12.png">
 
 > [flows.network](https://flows.network/) is still in its early stages. We would love to hear your feedback!
