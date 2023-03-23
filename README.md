@@ -1,6 +1,6 @@
 # GitHub Fork Notifier
 
-[Deploy this function on flows.network](#deploy-the-github-fork-notifier), and you will get an automated workflow: When someone forks your GitHub repo, you will get a Slack message, meawhile this fork record is saved to a form of Airtable. It helps DevRels and Community Managers track the growth of their GitHub communities.
+[Deploy this function on flows.network](#deploy-the-github-fork-notifier), and you will get an automated workflow: When someone forks your GitHub repo, you will get a Slack message, meawhile this fork record is saved to a form of Airtable. It helps DevRels and Community Managers to stay on top of the growth of their GitHub communities. 
 
 ![Github fork to slack](https://user-images.githubusercontent.com/45785633/227115653-935c616b-2881-4832-a53c-850f63a0f322.png)
 ![Save GitHub fork to Airtable ](https://user-images.githubusercontent.com/45785633/227122019-258041fc-ce2c-4819-9648-8fc51fee5782.png)
@@ -71,7 +71,7 @@ Here we can see, we need to configue three SaaS integrations.
 
 3. Click the "Connect/+ Add new authentication" button to authenticate your GitHub account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network-integration` bot on the repo that you changed in the code above.
 
-After that, click the Check button to see your flow details. As soon as the flow function's status becomes `ready` and the flow's status becomes `running`, the flow goes live. When a GitHub user forks your repo, you will get a Slack notifitaion and a new record in your Airtable.
+After that, click the Check button to see your flow details. As soon as the flow function's status becomes `ready` and the flow's status becomes `running`, the flow goes live. Whenever a GitHub user forks your repo, you will get a Slack notifitaion and a new record in your Airtable.
 <img width="1183" alt="image" src="https://user-images.githubusercontent.com/45785633/227132839-d4008845-4a67-46dc-af14-90e06ad96e12.png">
 
 > [flows.network](https://flows.network/) is still in its early stages. We would love to hear your feedback!
