@@ -1,6 +1,6 @@
 # GitHub Fork Notifier
 
-[Deploy this function on flows.network](#deploy-the-github-fork-notifier), and you will get an automated workflow if someone forked your GitHub repo, then you will get a Slack message and save this fork record to a form of Airtable at the same time. It helps DevRel understand the growth of your GitHub community.
+[Deploy this function on flows.network](#deploy-the-github-fork-notifier), and you will get an automated workflow: When someone forks your GitHub repo, you will get a Slack message, meawhile this fork record is saved to a form of Airtable. It helps DevRels and Community Managers track the growth of their GitHub communities.
 
 ![Github fork to slack](https://user-images.githubusercontent.com/45785633/227115653-935c616b-2881-4832-a53c-850f63a0f322.png)
 ![Save GitHub fork to Airtable ](https://user-images.githubusercontent.com/45785633/227122019-258041fc-ce2c-4819-9648-8fc51fee5782.png)
@@ -8,7 +8,7 @@
 
 ## Prerequisite 
 * A Slack Account
-* An Airtable accont, an [Airtable API Key](https://airtable.com/account) and also a base to record the new forks. For the form, you could just simply [copy the template base](https://airtable.com/shrwhFUgnz97Uf4nr). I will give more details bellow.
+* An Airtable account, an [Airtable API Key](https://airtable.com/account) and also a base to record the new forks. For the form, you can simply [copy the template base](https://airtable.com/shrwhFUgnz97Uf4nr). 
 
 ## Deploy the GitHub fork notifier
 
