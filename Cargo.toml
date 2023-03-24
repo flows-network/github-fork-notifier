@@ -8,7 +8,7 @@ path = "src/save-new-fork-airtable.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-github-flows = "0.3.2"
+github-flows = "0.4"
 slack-flows = "0.2.5"
 tokio_wasi = { version = "1.25.1", features = ["macros", "rt"] }
 anyhow = "1"
