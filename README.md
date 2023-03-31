@@ -1,8 +1,22 @@
-# GitHub Fork Notifier
+# <p align="center">GitHub Fork Notifier</p>
+
+<p align="center">
+  <a href="https://discord.gg/ccZn9ZMfFf">
+    <img src="https://img.shields.io/badge/chat-Discord-7289DA?logo=discord" alt="flows.network Discord">
+  </a>
+  <a href="https://twitter.com/flows_network">
+    <img src="https://img.shields.io/badge/Twitter-1DA1F2?logo=twitter&amp;logoColor=white" alt="flows.network Twitter">
+  </a>
+   <a href="https://flows.network/flow/new">
+    <img src="https://img.shields.io/website?up_message=deploy&url=https%3A%2F%2Fflows.network%2Fflow%2Fnew" alt="Create a flow">
+  </a>
+</p>
+
 
 [Deploy this function on flows.network](#deploy-the-github-fork-notifier), and you will get an automated workflow: When someone forks your GitHub repo, you will get a Slack message, meawhile this fork record is saved to a form on Airtable. It helps DevRels and Community Managers to stay on top of the growth of their GitHub communities. 
 
 ![Github fork to slack](https://user-images.githubusercontent.com/45785633/227115653-935c616b-2881-4832-a53c-850f63a0f322.png)
+
 ![Save GitHub fork to Airtable ](https://user-images.githubusercontent.com/45785633/227122019-258041fc-ce2c-4819-9648-8fc51fee5782.png)
 
 
