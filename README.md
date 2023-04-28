@@ -32,10 +32,13 @@ To create this fork notifier, we will use [flows.network](https://flows.network/
 
 Fork [this repo](https://github.com/flows-network/chatgpt-github-app/) and customize the code based on your needs. Since this function involes three SaaS integrations, so we need to change the code as the following.
 
-1. GitHub: Replace `WasmEdge` and `WasmEdge` with your own GitHub repo you want to monitor for the fork data.
+1. GitHub: 
+* Replace `alabulei1` with your own personal id；
+* Replace `WasmEdge` and `WasmEdge` with your own GitHub repo you want to monitor for the fork data；
 
 ```
 pub async fn run() {
+    let login = "alabulei1";
     let owner = "WasmEdge";
     let repo = "WasmEdge";
 
