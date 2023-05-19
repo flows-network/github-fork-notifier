@@ -25,6 +25,9 @@ async fn handler(payload: EventPayload) {
     let airtable_base_id = env::var("airtable_base_id").unwrap_or("appNEswczILgUsxML".to_string());
     let airtable_table_name = env::var("airtable_table_name").unwrap_or("fork".to_string());
 
+    let slack_workspace = env::var("slack_workspace").unwrap_or("secondstate".to_string());
+    let slack_channel = env::var("slack_channel").unwrap_or("github-status".to_string());
+
     if let EventPayload::ForkEvent(e) = payload {
         let forkee = e.forkee;
         let name = forkee.owner.unwrap().login;
@@ -32,7 +35,7 @@ async fn handler(payload: EventPayload) {
         let time = forkee.created_at.expect("time not found");
 
         let text = format!("{name} forked your {html_url}\n{time}");
-        send_message_to_channel("secondstate", "github-status", text);
+        send_message_to_channel(&slack_workspace, &slack_channel, text);
 
         let data = serde_json::json!({
         "Name": name,
