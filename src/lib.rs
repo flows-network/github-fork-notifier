@@ -1,10 +1,14 @@
 use airtable_flows::create_record;
 use dotenv::dotenv;
 use github_flows::{
-    get_octo, listen_to_event, octocrab::models::User, EventPayload, GithubLogin::Default,
+    get_octo, listen_to_event,
+    octocrab::{models::orgs::Organization, Result as OctoResult},
+    EventPayload,
+    GithubLogin::Default,
 };
 use slack_flows::send_message_to_channel;
 use std::env;
+
 #[no_mangle]
 #[tokio::main(flavor = "current_thread")]
 pub async fn run() {
@@ -24,16 +28,42 @@ async fn handler(payload: EventPayload) {
     let slack_channel = env::var("slack_channel").unwrap_or("github-status".to_string());
 
     if let EventPayload::ForkEvent(e) = payload {
-        // let octocrab = get_octo(&Default);
+        let octocrab = get_octo(&Default);
 
         let forkee = e.forkee;
+
+        let html_url = forkee.html_url.unwrap().to_string();
+        let time = forkee.created_at.expect("time not found");
         let forkee_as_user = forkee.owner.unwrap();
 
         let org_url = forkee_as_user.organizations_url;
         let forkee_login = forkee_as_user.login;
 
-        let html_url = forkee.html_url.unwrap().to_string();
-        let time = forkee.created_at.expect("time not found");
+        let mut email = "".to_string();
+        let mut twitter_handle = "".to_string();
+
+        let user_route = format!("users/{forkee_login}");
+        let response: OctoResult<User> = octocrab.get(&user_route, None::<&()>).await;
+        match response {
+            Err(_) => {}
+            Ok(user_obj) => {
+                email = user_obj.email.unwrap_or("".to_string());
+                twitter_handle = user_obj.twitter_username.unwrap_or("".to_string());
+            }
+        }
+
+        let mut org_name = "".to_string();
+        let mut org_company = "".to_string();
+
+        let org_route = format!("orgs/{forkee_login}");
+        let response: OctoResult<Organization> = octocrab.get(&org_route, None::<&()>).await;
+        match response {
+            Err(_) => {}
+            Ok(org_obj) => {
+                org_name = org_obj.name.unwrap();
+                org_company = org_obj.company.unwrap();
+            }
+        };
 
         let text = format!("{forkee_login} forked your {html_url}\n{time}");
         send_message_to_channel(&slack_workspace, &slack_channel, text);
@@ -41,6 +71,10 @@ async fn handler(payload: EventPayload) {
         let data = serde_json::json!({
         "Name": forkee_login,
         "Repo": html_url,
+        "Email": email,
+        "Twitter": twitter_handle,
+        "OrgName": org_name,
+        "OrgCompany": org_company,
         "Org": org_url,
         "Created": time,
         });
@@ -51,5 +85,21 @@ async fn handler(payload: EventPayload) {
             data,
         )
     }
+}
 
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize)]
+struct User {
+    login: String,
+    id: u32,
+    url: String,
+    html_url: String,
+    followers_url: String,
+    following_url: String,
+    organizations_url: String,
+    blog: String,
+    twitter_username: Option<String>,
+    email: Option<String>,
+    followers: u32,
 }
