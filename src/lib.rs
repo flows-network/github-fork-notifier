@@ -78,7 +78,6 @@ async fn handler(payload: EventPayload) {
         "Org": org_url,
         "Created": time,
         });
-        send_message_to_channel(&slack_workspace, &slack_channel, data.to_string());
  
         create_record(
             &airtable_token_name,
