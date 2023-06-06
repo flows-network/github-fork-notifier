@@ -46,10 +46,17 @@ async fn handler(payload: EventPayload) {
         let user_route = format!("users/{forkee_login}");
         let response: OctoResult<User> = octocrab.get(&user_route, None::<&()>).await;
         match response {
-            Err(_) => {}
+            Err(_) => {
+                send_message_to_channel(
+                    &slack_workspace,
+                    &slack_channel,
+                    "error getting email".to_string(),
+                );
+            }
             Ok(user_obj) => {
                 email = user_obj.email.unwrap_or("".to_string());
                 twitter_handle = user_obj.twitter_username.unwrap_or("".to_string());
+                send_message_to_channel(&slack_workspace, &slack_channel, email.clone());
             }
         }
 
@@ -60,10 +67,18 @@ async fn handler(payload: EventPayload) {
         let org_route = format!("orgs/{forkee_login}");
         let response: OctoResult<Organization> = octocrab.get(&org_route, None::<&()>).await;
         match response {
-            Err(_) => {}
+            Err(_) => {
+                send_message_to_channel(
+                    &slack_workspace,
+                    &slack_channel,
+                    "error getting org".to_string(),
+                );
+            }
             Ok(org_obj) => {
                 org_name = org_obj.name.unwrap_or("no org name".to_string());
                 org_company = org_obj.company.unwrap_or("no company name".to_string());
+                send_message_to_channel(&slack_workspace, &slack_channel, org_name.clone());
+
             }
         };
 
