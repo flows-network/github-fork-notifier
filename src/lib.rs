@@ -42,6 +42,7 @@ async fn handler(payload: EventPayload) {
         let mut email = "".to_string();
         let mut twitter_handle = "".to_string();
 
+        // let user_route = format!("https://api.github.com/users/jaykchen");
         let user_route = format!("users/{forkee_login}");
         let response: OctoResult<User> = octocrab.get(&user_route, None::<&()>).await;
         match response {
@@ -55,13 +56,14 @@ async fn handler(payload: EventPayload) {
         let mut org_name = "".to_string();
         let mut org_company = "".to_string();
 
+        // let org_route = format!("https://api.github.com/orgs/flows-network");
         let org_route = format!("orgs/{forkee_login}");
         let response: OctoResult<Organization> = octocrab.get(&org_route, None::<&()>).await;
         match response {
             Err(_) => {}
             Ok(org_obj) => {
-                org_name = org_obj.name.unwrap();
-                org_company = org_obj.company.unwrap();
+                org_name = org_obj.name.unwrap_or("no org name".to_string());
+                org_company = org_obj.company.unwrap_or("no company name".to_string());
             }
         };
 
